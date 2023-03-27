@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class SecondPage  {
+class SecondPage extends StatelessWidget {
   final IconData icon;
 
   const SecondPage({Key? key, required this.icon}) : super(key: key);

@@ -3,13 +3,16 @@ import 'package:aplicacion_climatica/widgets/current_weather.dart';
 import 'package:aplicacion_climatica/widgets/next_days.dart';
 import 'package:aplicacion_climatica/widgets/information_aditional.dart';
 
+//screens
+import 'package:aplicacion_climatica/screens/pagetwo.dart';
+import 'package:aplicacion_climatica/screens/login.dart';
+
 void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -17,11 +20,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const HomePage(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => HomePage(),
+        '/segunda_pantalla': (context) => SecondPage(icon: Icons.home),
+        '/tercera_pantalla': (context) => ThirdPage(),
+      },
     );
   }
 }
-
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -33,9 +40,30 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Mi aplicación'),
-        centerTitle: true,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(56.0),
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0xff4286f4), Color(0xff373B44)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+          child: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            title: const Text(
+              'Clima',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            centerTitle: true,
+          ),
+        ),
       ),
       drawer: Drawer(
         child: ListView(
@@ -62,11 +90,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const SecondPage(icon: Icons.home)),
-                );
+                Navigator.pushNamed(context, '/segunda_pantalla');
               },
             ),
             ListTile(
@@ -78,12 +102,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          const SecondPage(icon: Icons.person)),
-                );
+                Navigator.pushNamed(context, '/segunda_pantalla');
               },
             ),
             ListTile(
@@ -95,12 +114,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          const SecondPage(icon: Icons.shopping_cart)),
-                );
+                Navigator.pushNamed(context, '/segunda_pantalla');
               },
             ),
             ListTile(
@@ -112,15 +126,12 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          const SecondPage(icon: Icons.settings)),
-                );
+                Navigator.pushNamed(context, '/tercera_pantalla');
               },
             ),
             ListTile(
+             
+
               leading: Icon(Icons.search),
               title: const Text(
                 'Opción 5',
@@ -129,12 +140,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          const SecondPage(icon: Icons.search)),
-                );
+                Navigator.pushNamed(context, '/tercera_pantalla');
               },
             ),
           ],
@@ -142,6 +148,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Column(
         children: [
+          
           currentWeather(Icons.cloud, '25ºC', 'Unipoli'),
           Container(
             child: Column(
@@ -153,11 +160,12 @@ class _HomePageState extends State<HomePage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 16.0),
+                SizedBox(height: 5.0),
                 Additional_information('', 'humidity', 'presure', 'feels_like'),
               ],
             ),
           ),
+          SizedBox(height: 1.0),
           additionalInformationtwo('873842', '232', 'Un', 'Unip'),
         ],
       ),
@@ -165,31 +173,17 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class SecondPage extends StatelessWidget {
-  final IconData icon;
-
-  const SecondPage({Key? key, required this.icon}) : super(key: key);
+class ThirdPage extends StatelessWidget {
+  const ThirdPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Segunda pantalla',
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ),
-        centerTitle: true,
+        title: const Text('Tercera Pantalla'),
       ),
-      body: Container(
-        color: Colors.black,
-        alignment: Alignment.center,
-        child: Icon(
-          icon,
-          size: 100,
-          color: Colors.white,
-        ),
+      body: const Center(
+        child: Text('Esta es la tercera pantalla'),
       ),
     );
   }
