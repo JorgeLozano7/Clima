@@ -1,123 +1,130 @@
 import 'package:flutter/material.dart';
-import 'package:aplicacion_climatica/providers/login_form_provider.dart';
-import 'package:aplicacion_climatica/ui/input_decorations.dart';
-import 'package:aplicacion_climatica/widgets/card_container.dart';
-import 'package:aplicacion_climatica/widgets/auth_bacround.dart';
-import 'package:provider/provider.dart';
+import 'package:email_validator/email_validator.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        body: AuthBackground(
-            child: SingleChildScrollView(
-      child: Column(
-        children: [
-          SizedBox(height: 250),
-          CardContainer(
-              child: Column(
-            children: [
-              SizedBox(height: 10),
-              Text('Login', style: Theme.of(context).textTheme.headline4),
-              SizedBox(height: 30),
-              ChangeNotifierProvider(
-                  create: (_) => LoginFormProvider(), child: _LoginForm())
-            ],
-          )),
-          SizedBox(height: 50),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pushNamed(context, 'Crearusuario');
-            },
-            child: Text(
-              'Crear una nueva cuenta',
-            ),
-          )
-        ],
-      ),
-    )));
-  }
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginForm extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final loginForm = Provider.of<LoginFormProvider>(context);
+class _LoginPageState extends State<LoginPage> {
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
 
-    return Container(
-      child: Form(
-        key: loginForm.formKey,
-        autovalidateMode: AutovalidateMode.onUserInteraction,
-        child: Column(
-          children: [
-            TextFormField(
-              autocorrect: false,
-              enabled: true,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecorations.authInputDecoration(
-                  hintText: 'john.doe@gmail.com',
-                  labelText: 'Correo electrónico',
-                  prefixIcon: Icons.alternate_email_rounded),
-              onChanged: (value) => loginForm.email = value,
-              validator: (value) {
-                String pattern =
-                    r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-                RegExp regExp = new RegExp(pattern);
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-                return regExp.hasMatch(value ?? '')
-                    ? null
-                    : 'El valor ingresado no luce como un correo';
-              },
+@override
+Widget build(BuildContext context) {
+  return MaterialApp(
+    home: Scaffold(
+      body: Container(
+  decoration: BoxDecoration(
+    image: DecorationImage(
+      image: NetworkImage(
+        'https://th.bing.com/th/id/R.0e288850c7bbb0042741bd4207e44202?rik=8hk9oaaaUXRVew&riu=http%3a%2f%2fst.depositphotos.com%2f1035451%2f1439%2fv%2f950%2fdepositphotos_14396773-stock-illustration-good-weather-round-background-blue.jpg&ehk=ghJmGQgk0yVT1hLLeUwakEKU6Z4DaIRmU71QMVL0zE8%3d&risl=&pid=ImgRaw&r=0',
+      ),
+      fit: BoxFit.cover,
+    ),
+  ),
+  child: Center(
+    child: Padding(
+      padding: EdgeInsets.all(20),
+      child: SingleChildScrollView(
+        child: Container(
+          child: Card(
+            margin: EdgeInsets.all(16),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
             ),
-            SizedBox(height: 30),
-            TextFormField(
-              autocorrect: false,
-              enabled: true,
-              obscureText: true,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecorations.authInputDecoration(
-                  hintText: '*****',
-                  labelText: 'Contraseña',
-                  prefixIcon: Icons.lock_outline),
-              onChanged: (value) => loginForm.password = value,
-              validator: (value) {
-                return (value != null && value.length >= 6)
-                    ? null
-                    : 'La contraseña debe de ser de 6 caracteres';
-              },
+            child: Container(
+              padding: EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.black,
+                  width: 2,
+                ),
+                borderRadius: BorderRadius.circular(20.0)
+              ),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Column(
+                      children: [
+                        Icon(
+                          Icons.person_2_rounded,
+                          color: Colors.blue,
+                          size: 50,
+                        ),
+                        Text(
+                          'Login',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20),
+                    TextFormField(
+                      controller: _emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                        labelText: 'Email',
+                        icon: Icon(Icons.email),
+                      ),
+                      validator: (value) {
+                        if (!EmailValidator.validate(value!)) {
+                          return 'Por favor, ingrese un email válido';
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 16),
+                    TextFormField(
+                      controller: _passwordController,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        labelText: 'Contraseña',
+                        icon: Icon(Icons.lock),
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Por favor, ingrese una contraseña';
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 16),
+                    ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          Navigator.pushNamed(context, '/Home');
+                        }
+                      },
+                      child: Text('Iniciar sesión'),
+                      style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 30, vertical: 10),
+                          textStyle: TextStyle(fontSize: 18),
+                          primary: const Color(0xff4286f4),
+                          onPrimary: Colors.white,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10))),
+                    ),
+                  ],
+                ),
+              ),
             ),
-            SizedBox(height: 30),
-            MaterialButton(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)),
-                disabledColor: Colors.grey,
-                elevation: 0,
-                color: Color.fromARGB(255, 204, 142, 255),
-                child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 80, vertical: 15),
-                    child: Text(
-                      loginForm.isLoading ? 'Espere' : 'Ingresar',
-                      style: TextStyle(color: Colors.white),
-                    )),
-                onPressed: loginForm.isLoading
-                    ? null
-                    : () async {
-                        FocusScope.of(context).unfocus();
-
-                        if (!loginForm.isValidForm()) return;
-
-                        loginForm.isLoading = true;
-
-                        await Future.delayed(Duration(seconds: 2));
-
-                        // TODO: validar si el login es correcto
-                        loginForm.isLoading = false;
-
-                        Navigator.pushReplacementNamed(context, 'home2');
-                      })
-          ],
+          ),
         ),
       ),
-    );
-  }
+    ),
+  ),
+)
+
+    ),
+  );
+}
 }
