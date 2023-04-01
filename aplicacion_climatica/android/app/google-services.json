@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "107176504380",
+    "project_id": "clima-da4fb",
+    "storage_bucket": "clima-da4fb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:107176504380:android:4e3987b4222737d56da739",
+        "android_client_info": {
+          "package_name": "com.example.aplicacion_climatica"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "107176504380-p92bv47eh6ulk7906i6jv2o8h0baq1mj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApu6suv2EPl8N2-BXQQkSf78bvwgUB-k4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "107176504380-p92bv47eh6ulk7906i6jv2o8h0baq1mj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

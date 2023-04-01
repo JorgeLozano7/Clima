@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:aplicacion_climatica/widgets/current_weather.dart';
-import 'package:aplicacion_climatica/widgets/next_days.dart';
-import 'package:aplicacion_climatica/widgets/information_aditional.dart';
+import 'package:clima/widgets/current_weather.dart';
+import 'package:clima/widgets/next_days.dart';
+import 'package:clima/widgets/information_aditional.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -50,13 +50,13 @@ class HomePage extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.home),
               title: const Text(
-                'Opción 1',
+                'Home',
                 style: TextStyle(
                   color: Colors.black,
                 ),
               ),
               onTap: () {
-                Navigator.pushNamed(context, '/segunda_pantalla');
+                Navigator.pushNamed(context, '/Home');
               },
             ),
             ListTile(
@@ -82,31 +82,32 @@ class HomePage extends StatelessWidget {
               ),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.pushNamed(context, '/terminos_condiciones');
+                Navigator.pushNamed(context, '/terminos');
               },
             ),
             ListTile(
               leading: const Icon(Icons.settings),
               title: const Text(
-                'Opción 4',
+                'SIN REDIRECCION',
                 style: TextStyle(
                   color: Colors.black,
                 ),
               ),
               onTap: () {
-                Navigator.pushNamed(context, '/tercera_pantalla');
+                //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> ProfileScreen()));
+                // Navigator.pushNamed(context, '/tercera_pantalla');
               },
             ),
             ListTile(
               leading: const Icon(Icons.search),
               title: const Text(
-                'Opción 5',
+                'SIN REDIRECCION',
                 style: TextStyle(
                   color: Colors.black,
                 ),
               ),
               onTap: () {
-                Navigator.pushNamed(context, '/tercera_pantalla');
+                // Navigator.pushNamed(context, '/tercera_pantalla');
               },
             ),
           ],
